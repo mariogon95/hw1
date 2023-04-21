@@ -134,6 +134,7 @@
 DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS studios;
 
 CREATE TABLE actors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -145,7 +146,12 @@ CREATE TABLE movies (
   title TEXT,
   year INTEGER,
   rating_letter TEXT,
-  studio TEXT
+  studio_id INTEGER
+);
+
+CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  studio_name TEXT
 );
 
 CREATE TABLE characters (
@@ -167,9 +173,11 @@ INSERT INTO actors (name) VALUES("Tom Hardy");
 INSERT INTO actors (name) VALUES("Joseph Gordon-Levitt");
 INSERT INTO actors (name) VALUES("Anne Hathaway");
 
-INSERT INTO movies (title, year, rating_letter, studio) VALUES ('Batman Begins', 2005, "PG-13", "Warner Bros.");
-INSERT INTO movies (title, year, rating_letter, studio) VALUES ('The Dark Knight', 2008, "PG-13", "Warner Bros.");
-INSERT INTO movies (title, year, rating_letter, studio) VALUES ('The Dark Knight Rises', 2012, "PG-13", "Warner Bros.");
+INSERT INTO movies (title, year, rating_letter, studio_id) VALUES ('Batman Begins', 2005, "PG-13",1);
+INSERT INTO movies (title, year, rating_letter, studio_id) VALUES ('The Dark Knight', 2008, "PG-13",1);
+INSERT INTO movies (title, year, rating_letter, studio_id) VALUES ('The Dark Knight Rises', 2012, "PG-13",1);
+
+INSERT INTO studios (studio_name) VALUES ("Warner Bros.");
 
 INSERT INTO characters (character_name, actor_id, movie_id) VALUES ("Bruce Wayne", 1, 1);
 INSERT INTO characters (character_name, actor_id, movie_id) VALUES ("Alfred", 2, 1);
@@ -190,8 +198,8 @@ INSERT INTO characters (character_name, actor_id, movie_id) VALUES ("Selina Kyle
 .print "Movies"
 .print "======"
 .print ""
-SELECT title, year, rating_letter, studio
-FROM movies
+SELECT title, year, rating_letter, studio_name
+FROM movies INNER JOIN studios ON studios.id = studio_id
 ;
 
 .print ""
